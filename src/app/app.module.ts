@@ -10,7 +10,7 @@ import { ShoppingEditComponent } from './cmps/shopping-edit/shopping-edit.compon
 import { RecipeListComponent } from './cmps/recipe-list/recipe-list.component';
 import { RecipeItemComponent } from './cmps/recipe-item/recipe-item.component';
 import { RecipeDetailsComponent } from './cmps/recipe-details/recipe-details.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { RecipeAboutComponent } from './cmps/recipe-about/recipe-about.component';
 import { RecipeEditComponent } from './cmps/recipe-edit/recipe-edit.component';
@@ -33,6 +33,7 @@ import { RecipeEditComponent } from './cmps/recipe-edit/recipe-edit.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

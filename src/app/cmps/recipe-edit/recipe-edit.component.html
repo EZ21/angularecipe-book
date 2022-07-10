@@ -1,1 +1,64 @@
-<p>recipe-edit works!</p>
+<section class="row">
+    <div class="col-12">
+        <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success me-2" [disabled]="!recipeForm.valid">Save</button>
+                    <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="name" class="fw-bold">Name</label>
+                        <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid': !recipeForm.get('name').valid && recipeForm.get('name').touched}">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="imagePath" class="fw-bold">Image URL</label>
+                        <input type="text" class="form-control" formControlName="imagePath" #imagePath [ngClass]="{'is-invalid': !recipeForm.get('imagePath').valid && recipeForm.get('imagePath').touched}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <img [src]="imagePath.value" class="img-fluid rounded my-2">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="description" class="fw-bold">Description</label>
+                        <textarea type="text" class="form-control" rows="6" formControlName="description" [ngClass]="{'is-invalid': !recipeForm.get('description').valid && recipeForm.get('description').touched}"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12" formArrayName="ingredients">
+                    <div class="row my-2" [formGroupName]="i" *ngFor="let ingredientControl of controls; let i = index">
+                        <div class="col-8">
+                            <input type="text" class="form-control" placeholder="Ingredient" formControlName="name"  [ngClass]="{'is-invalid': !recipeForm.get('ingredients.'+i+'.name').valid && recipeForm.get('ingredients.'+i+'.name').touched}">
+                        </div>
+                        <div class="col-2">
+                            <input type="number" class="form-control" formControlName="amount" [ngClass]="{'is-invalid': !recipeForm.get('ingredients.'+i+'.amount').valid && recipeForm.get('ingredients.'+i+'.amount').touched}">
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-danger" (click)="onDeleteIngredient(i)">X</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-success" (click)="onAddIngredient()">Add Ingredient</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
