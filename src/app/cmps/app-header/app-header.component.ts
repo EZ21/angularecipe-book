@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DataStorageService } from 'src/app/services/data-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -7,8 +8,24 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class AppHeaderComponent implements OnInit {
 
-  constructor() { };
+  navbarCollapsed: boolean = true;
+
+  constructor(private dataStorageService: DataStorageService) { };
 
   ngOnInit(): void {
+  };
+
+  // HAMBURGER MENU:
+  onToggleNavbarCollapsed(): void {
+    this.navbarCollapsed = !this.navbarCollapsed;
+    console.log('navbarCollapsed:', this.navbarCollapsed);
+  };
+
+  onSaveData() {
+    this.dataStorageService.save();
+  };
+
+  onFetchData() {
+    this.dataStorageService.fetch().subscribe();
   };
 };

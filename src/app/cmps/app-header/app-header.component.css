@@ -1,0 +1,6 @@
+@media(min-width: 992px) {
+    #manage {
+        position: absolute;
+        margin-left: 75%;
+    }
+}

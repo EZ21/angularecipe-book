@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './cmps/app-root/app.component';
 import { AppHeaderComponent } from './cmps/app-header/app-header.component';
@@ -33,7 +33,8 @@ import { RecipeEditComponent } from './cmps/recipe-edit/recipe-edit.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
