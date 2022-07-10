@@ -11,6 +11,7 @@ import { RecipeListComponent } from './cmps/recipe-list/recipe-list.component';
 import { RecipeItemComponent } from './cmps/recipe-item/recipe-item.component';
 import { RecipeDetailsComponent } from './cmps/recipe-details/recipe-details.component';
 import { FormsModule } from '@angular/forms';
+import { DropdownDirective } from './directives/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     ShoppingEditComponent,
     RecipeListComponent,
     RecipeItemComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
