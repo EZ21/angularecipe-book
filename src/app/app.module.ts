@@ -17,6 +17,7 @@ import { RecipeEditComponent } from './cmps/recipe-edit/recipe-edit.component';
 import { AuthComponent } from './cmps/auth/auth.component';
 import { LoadingSpinnerComponent } from './cmps/loading-spinner/loading-spinner.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AlertComponent } from './cmps/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     RecipeAboutComponent,
     RecipeEditComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
