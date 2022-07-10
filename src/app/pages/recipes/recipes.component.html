@@ -1,10 +1,13 @@
 <section>
     <div class="row">
         <div class="col-md-5">
-            <recipe-list></recipe-list>
+            <recipe-list (recipeWasSelected)="selectedRecipe = $event"></recipe-list>
         </div>
         <div class="col-md-7">
-            <recipe-details></recipe-details>
+            <recipe-details *ngIf="selectedRecipe; else infoText" [recipe]="selectedRecipe"></recipe-details>
+            <ng-template #infoText>
+                <p>Please select a recipe.</p>
+            </ng-template>
         </div>
     </div>
 </section>

@@ -10,6 +10,7 @@ import { ShoppingEditComponent } from './cmps/shopping-edit/shopping-edit.compon
 import { RecipeListComponent } from './cmps/recipe-list/recipe-list.component';
 import { RecipeItemComponent } from './cmps/recipe-item/recipe-item.component';
 import { RecipeDetailsComponent } from './cmps/recipe-details/recipe-details.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RecipeDetailsComponent } from './cmps/recipe-details/recipe-details.com
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
