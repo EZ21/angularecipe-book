@@ -1,4 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 
 @Component({
@@ -6,19 +8,27 @@ import { DataStorageService } from 'src/app/services/data-storage.service';
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.css']
 })
-export class AppHeaderComponent implements OnInit {
+export class AppHeaderComponent implements OnInit, OnDestroy {
 
   navbarCollapsed: boolean = true;
 
-  constructor(private dataStorageService: DataStorageService) { };
+  private userSubscription: Subscription;
+  isAuthenticated = false;
+
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService,
+  ) { };
 
   ngOnInit(): void {
+    this.userSubscription = this.authService.user$.subscribe(user => {
+      this.isAuthenticated = !!user;
+    });
   };
 
   // HAMBURGER MENU:
   onToggleNavbarCollapsed(): void {
     this.navbarCollapsed = !this.navbarCollapsed;
-    console.log('navbarCollapsed:', this.navbarCollapsed);
   };
 
   onSaveData() {
@@ -27,5 +37,13 @@ export class AppHeaderComponent implements OnInit {
 
   onFetchData() {
     this.dataStorageService.fetch().subscribe();
+  };
+
+  onLogout() {
+    this.authService.logout();
+  };
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   };
 };

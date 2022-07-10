@@ -1,6 +1,20 @@
 @media(min-width: 992px) {
     #manage {
         position: absolute;
-        margin-left: 75%;
+        margin-left: 70%;
+    }
+}
+
+@media(max-width: 992px) {
+    #manage {
+        position: absolute;
+        margin-left: 55%;
+    }
+}
+
+@media(max-width: 576px) {
+    #manage {
+        position: absolute;
+        margin-left: 55%;
     }
 }
