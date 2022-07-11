@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faBurger } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { map, Subscription } from 'rxjs';
 import * as fromAppState from '../../models/app-state.model';
@@ -14,6 +15,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   navbarCollapsed: boolean = true;
   private userSubscription: Subscription;
   isAuthenticated = false;
+  faBurger = faBurger;
 
   constructor(private store: Store<fromAppState.AppState>) { }
 
