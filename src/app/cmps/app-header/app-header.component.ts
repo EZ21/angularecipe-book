@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataStorageService } from 'src/app/services/data-storage.service';
+import { Store } from '@ngrx/store';
+import { map, Subscription } from 'rxjs';
+import * as fromAppState from '../../models/app-state.model';
+import * as AuthActions from '../../store/actions/auth.actions';
+import * as RecipesActions from '../../store/actions/recipes.actions';
 
 @Component({
   selector: 'app-header',
@@ -9,19 +11,14 @@ import { DataStorageService } from 'src/app/services/data-storage.service';
   styleUrls: ['./app-header.component.css']
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
-
   navbarCollapsed: boolean = true;
-
   private userSubscription: Subscription;
   isAuthenticated = false;
 
-  constructor(
-    private dataStorageService: DataStorageService,
-    private authService: AuthService,
-  ) { };
+  constructor(private store: Store<fromAppState.AppState>) { }
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user$.subscribe(user => {
+    this.userSubscription = this.store.select('auth').pipe(map(authState => authState.user)).subscribe(user => {
       this.isAuthenticated = !!user;
     });
   };
@@ -30,17 +27,17 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   onToggleNavbarCollapsed(): void {
     this.navbarCollapsed = !this.navbarCollapsed;
   };
-
+  
   onSaveData() {
-    this.dataStorageService.save();
+    this.store.dispatch(new RecipesActions.StoreRecipes())
   };
 
   onFetchData() {
-    this.dataStorageService.fetch().subscribe();
+    this.store.dispatch(new RecipesActions.FetchRecipes());
   };
 
   onLogout() {
-    this.authService.logout();
+    this.store.dispatch(new AuthActions.Logout());
   };
 
   ngOnDestroy(): void {

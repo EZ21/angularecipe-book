@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
+import * as fromAppState from '../../models/app-state.model';
+import * as AuthActions from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AppComponent implements OnInit {
   title = 'angularecipe-book';
 
-  constructor(private authService: AuthService) { };
+  constructor(private store: Store<fromAppState.AppState>) { };
 
   ngOnInit() {
-    this.authService.autoLogin();
+    this.store.dispatch(new AuthActions.AutoLogin());
   };
 };

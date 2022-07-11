@@ -1,27 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthResponseData } from 'src/app/models/auth-response-data';
-import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import * as fromAppState from '../../models/app-state.model';
+import * as AuthActions from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  templateUrl: './auth.component.html'
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
-
   isLoading = false;
   errorMsg: string = null;
+  private storeSubscription: Subscription;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) { };
+  constructor(private store: Store<fromAppState.AppState>) { };
 
   ngOnInit(): void {
+    this.storeSubscription = this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.isLoading;
+      this.errorMsg = authState.authError;
+    });
   };
 
   onSwitchLoginMode() {
@@ -35,28 +35,22 @@ export class AuthComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    this.isLoading = true;
-
-    let authObservable$: Observable<AuthResponseData>;
-
     if(this.isLoginMode) {
-      authObservable$ = this.authService.login(email, password);
+      this.store.dispatch(new AuthActions.LoginStart({ email: email, password: password }));
     } else {
-      authObservable$ = this.authService.signup(email, password);
+      this.store.dispatch(new AuthActions.SignupStart({email: email, password: password}));
     };
-
-    authObservable$.subscribe({next: (responseData) => {
-      this.isLoading = false;
-      this.router.navigateByUrl('/recipes');
-    }, error: errorRes => {
-      this.errorMsg = `${errorRes}`;
-      this.isLoading = false;
-    }});
 
     form.reset();
   };
 
   onHandleAlert() {
-    this.errorMsg = null;
+    this.store.dispatch(new AuthActions.ClearError());
+  };
+
+  ngOnDestroy(): void {
+    if(this.storeSubscription) {
+      this.storeSubscription.unsubscribe();
+    };
   };
 };
