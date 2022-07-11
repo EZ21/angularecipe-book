@@ -22,13 +22,13 @@ export class DataStorageService {
   };
 
   public fetch() {
-    return (this.http.get<Recipe[]>(`${this.firebaseProjURL}/recipes.json`).pipe(
+    return this.http.get<Recipe[]>(`${this.firebaseProjURL}/recipes.json`).pipe(
       map(recipes => {
         return recipes.map(recipe => {
           return ({ ...recipe, ingredients: recipe.ingredients ? recipe.ingredients : [] });
         });
       }), tap(recipes => {
         this.recipeService.setRecipes(recipes);
-      })));
+      }));
   };
 };
